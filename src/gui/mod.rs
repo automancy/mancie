@@ -3,6 +3,9 @@ use crate::error::Error;
 use eframe::egui::{self, popup, AboveOrBelow, Id, PopupCloseBehavior, Ui};
 use std::collections::VecDeque;
 
+mod formats;
+mod homepage;
+
 #[derive(Default)]
 pub struct MancieGui {
     pub errors: VecDeque<Error>,
@@ -10,20 +13,20 @@ pub struct MancieGui {
 }
 
 impl eframe::App for MancieGui {
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+    fn update(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.heading("mancie");
             error_modal(ctx, &mut self.errors);
             navbar(ctx, self, ui);
             match self.selected_tab {
                 SelectedTab::Main => {
-                    ui.heading("mancie");
+                    homepage::homepage_ui(self, ctx, frame, ui);
                 }
                 SelectedTab::FormatsBlendToGltf => {
-                    ui.heading("Blend to GLTF");
+                    formats::blend_to_gltf_ui(self, ctx, frame, ui);
                 }
                 SelectedTab::FormatsSvgToBlend => {
-                    ui.heading("SVG to Blend");
+                    formats::svg_to_blend_ui(self, ctx, frame, ui);
                 }
             }
         });

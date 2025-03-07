@@ -2,6 +2,7 @@
 #![allow(rustdoc::missing_crate_level_docs)]
 
 pub mod error;
+pub mod formats;
 pub mod gui;
 
 use eframe::egui;
